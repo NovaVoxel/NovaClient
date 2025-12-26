@@ -20,3 +20,7 @@ target_link_libraries(novaclient PRIVATE NovaForge::NovaForge)
 
 add_executable(novaclient_demo src/main.cpp)
 target_link_libraries(novaclient_demo PRIVATE novaclient)
+
+if (WIN32)
+    target_link_libraries(novaclient PRIVATE ws2_32)
+endif()
