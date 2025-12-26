@@ -8,20 +8,29 @@ namespace NovaClient::Net
     class PacketBuffer
     {
     public:
-        void write_u8(uint8_t v);
-        void write_varint(int32_t v);
+        PacketBuffer() = default;
+
+        const std::vector<std::uint8_t>& data() const { return m_data; }
+        std::vector<std::uint8_t>& data() { return m_data; }
+
+        std::size_t size() const { return m_data.size(); }
+
+        // write
+        void write_u8(std::uint8_t v);
+        void write_u16(std::uint16_t v);        
+        void write_varint(std::int32_t v);
         void write_string(const std::string& s);
 
-        uint8_t read_u8();
-        int32_t read_varint();
+        // read
+        std::uint8_t read_u8();
+        std::uint16_t read_u16();
+        std::int32_t read_varint();
         std::string read_string();
 
-        const std::vector<uint8_t>& data() const { return m_data; }
-
     private:
-        std::vector<uint8_t> m_data;
-        size_t readPos = 0;
+        std::vector<std::uint8_t> m_data;
+        std::size_t m_readPos = 0;
 
-        void ensure(size_t n);
+        void ensure(std::size_t n);
     };
 }
